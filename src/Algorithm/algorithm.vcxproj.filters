@@ -16,6 +16,9 @@
     <Filter Include="common\Rand">
       <UniqueIdentifier>{54c394cc-85f0-4c02-8c57-dc38827fcb5a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="sort">
+      <UniqueIdentifier>{0304b4d3-b2ad-4adb-afae-91d57abf2ab9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -62,6 +65,12 @@
     </ClInclude>
     <ClInclude Include="..\common\Rand\rand.h">
       <Filter>common\Rand</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sort\sort_insert.h">
+      <Filter>sort</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sort\max_sub_array.h">
+      <Filter>sort</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

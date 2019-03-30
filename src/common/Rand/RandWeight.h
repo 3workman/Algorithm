@@ -7,7 +7,7 @@
 * @ author zhoumf
 * @ date 2016-12-26
 ************************************************************************/
-template <typename T> typename std::vector<T*>::const_iterator RandWeight(const std::vector<T*>& vec)
+template <typename T> std::vector<T*>::const_iterator RandWeight(const std::vector<T*>& vec)
 {
     int sumWeight = 0;
     for (std::vector<T*>::const_iterator it = vec.begin(); it != vec.end(); ++it)

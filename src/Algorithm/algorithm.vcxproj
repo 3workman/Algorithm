@@ -30,12 +30,14 @@
     <ClInclude Include="..\common\tool\UnitTest.h" />
     <ClInclude Include="..\include\public.h" />
     <ClInclude Include="..\include\stdafx.h" />
+    <ClInclude Include="..\sort\max_sub_array.h" />
+    <ClInclude Include="..\sort\sort_insert.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{77E96579-F6AA-4429-B630-030B8CBFDBC2}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>svr_client</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
     <ProjectName>algorithm</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -79,6 +81,9 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)src\common;$(SolutionDir)src\include;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4819</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MinimalRebuild>
+      </MinimalRebuild>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
