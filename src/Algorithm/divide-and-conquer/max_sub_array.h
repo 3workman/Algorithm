@@ -48,10 +48,10 @@ SubArray FindMaxSubArray(const std::vector<int>& arr, int begin, int end) {
 	if (end - begin <= 1) {
 		return { begin, end, arr[begin] };
 	} else {
-		int mid = (begin + end + 1) / 2;//中间下标，+1向上取整，分成两个子数组
+		int mid = (begin + end) >> 1; //中间下标，向下取整，分成两个子数组
 		auto left = FindMaxSubArray(arr, begin, mid);			//情形一：只在左子数组
-		auto right = FindMaxSubArray(arr, mid, end);				//情形二：只在右子数组
-		auto cross = FindMaxCrossSubArray(arr, begin, mid, end);	//情形三：两边都有，跨了分割点
+		auto right = FindMaxSubArray(arr, mid, end);			//情形二：只在右子数组
+		auto cross = FindMaxCrossSubArray(arr, begin, mid, end);//情形三：两边都有，跨了分割点
 
 		if (SubArraySum(left) >= SubArraySum(right) && SubArraySum(left) >= SubArraySum(cross))
 			return left;

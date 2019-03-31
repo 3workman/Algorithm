@@ -16,7 +16,7 @@
     <Filter Include="common\Rand">
       <UniqueIdentifier>{54c394cc-85f0-4c02-8c57-dc38827fcb5a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="sort">
+    <Filter Include="DivideConquer">
       <UniqueIdentifier>{0304b4d3-b2ad-4adb-afae-91d57abf2ab9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -31,14 +31,14 @@
     <ClCompile Include="..\common\Log\LogFile.cpp">
       <Filter>common\Log</Filter>
     </ClCompile>
-    <ClCompile Include="..\common\Log\RuntimeCast.cpp">
-      <Filter>common\Log</Filter>
-    </ClCompile>
     <ClCompile Include="..\common\tool\UnitTest.cpp">
       <Filter>common\tool</Filter>
     </ClCompile>
     <ClCompile Include="..\common\Rand\rand.cpp">
       <Filter>common\Rand</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\Log\RuntimeCost.cpp">
+      <Filter>common\Log</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -47,9 +47,6 @@
     </ClInclude>
     <ClInclude Include="..\include\public.h">
       <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\common\Log\RuntimeCast.h">
-      <Filter>common\Log</Filter>
     </ClInclude>
     <ClInclude Include="..\common\Log\AsyncLog.h">
       <Filter>common\Log</Filter>
@@ -66,11 +63,20 @@
     <ClInclude Include="..\common\Rand\rand.h">
       <Filter>common\Rand</Filter>
     </ClInclude>
-    <ClInclude Include="..\sort\sort_insert.h">
-      <Filter>sort</Filter>
+    <ClInclude Include="..\common\Log\RuntimeCost.h">
+      <Filter>common\Log</Filter>
     </ClInclude>
-    <ClInclude Include="..\sort\max_sub_array.h">
-      <Filter>sort</Filter>
+    <ClInclude Include="divide-and-conquer\chip_inspect.h">
+      <Filter>DivideConquer</Filter>
+    </ClInclude>
+    <ClInclude Include="divide-and-conquer\max_sub_array.h">
+      <Filter>DivideConquer</Filter>
+    </ClInclude>
+    <ClInclude Include="divide-and-conquer\search.h">
+      <Filter>DivideConquer</Filter>
+    </ClInclude>
+    <ClInclude Include="divide-and-conquer\sort.h">
+      <Filter>DivideConquer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

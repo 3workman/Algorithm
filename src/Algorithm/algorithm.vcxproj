@@ -13,7 +13,7 @@
   <ItemGroup>
     <ClCompile Include="..\common\Log\AsyncLog.cpp" />
     <ClCompile Include="..\common\Log\LogFile.cpp" />
-    <ClCompile Include="..\common\Log\RuntimeCast.cpp" />
+    <ClCompile Include="..\common\Log\RuntimeCost.cpp" />
     <ClCompile Include="..\common\Rand\rand.cpp" />
     <ClCompile Include="..\common\tool\UnitTest.cpp" />
     <ClCompile Include="..\include\stdafx.cpp">
@@ -24,14 +24,16 @@
   <ItemGroup>
     <ClInclude Include="..\common\Log\AsyncLog.h" />
     <ClInclude Include="..\common\Log\LogFile.h" />
-    <ClInclude Include="..\common\Log\RuntimeCast.h" />
+    <ClInclude Include="..\common\Log\RuntimeCost.h" />
     <ClInclude Include="..\common\Rand\rand.h" />
     <ClInclude Include="..\common\Rand\RandWeight.h" />
     <ClInclude Include="..\common\tool\UnitTest.h" />
     <ClInclude Include="..\include\public.h" />
     <ClInclude Include="..\include\stdafx.h" />
-    <ClInclude Include="..\sort\max_sub_array.h" />
-    <ClInclude Include="..\sort\sort_insert.h" />
+    <ClInclude Include="divide-and-conquer\chip_inspect.h" />
+    <ClInclude Include="divide-and-conquer\max_sub_array.h" />
+    <ClInclude Include="divide-and-conquer\search.h" />
+    <ClInclude Include="divide-and-conquer\sort.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{77E96579-F6AA-4429-B630-030B8CBFDBC2}</ProjectGuid>

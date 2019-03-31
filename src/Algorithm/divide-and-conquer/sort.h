@@ -10,10 +10,12 @@
 			·合并判断条件，次级指针、哨兵
 		·切换新思路
 
-* @ optimize
+* @ Optimize：利用已有的结果
 	、插入排序中，定位新元素位置时，用的遍历方式
 		·此时列表是已排序的，有更快的定位方法
 		·如二分
+	、再比如计算X^n，可以连续乘n次，时间复杂度θ(n)
+		·分治思路，拆成两相等部分后，仅需计算一个部分即可，θ(lgn)
 
 * @ author zhoumf
 * @ date 2019-3-30
@@ -38,7 +40,7 @@ template <typename T> void SortInsert(std::vector<T>& arr) {
 template <typename T> void SortMerge(std::vector<T>& arr) { SortMerge(arr, 0, arr.size()); }
 template <typename T> void SortMerge(std::vector<T>& arr, int begin, int end) {
 	if (end - begin > 1) {
-		int mid = (begin + end + 1) / 2;//中间下标，+1向上取整，分成两个子数组
+		int mid = (begin + end) >> 1;  //中间下标，向下取整，分成两个子数组
 		SortMerge(arr, begin, mid);    //分别递归
 		SortMerge(arr, mid, end);
 		SortMerge2(arr, begin, mid, end); //合并已排序的子数组
@@ -53,4 +55,25 @@ template <typename T> void SortMerge2(std::vector<T>& arr, int begin, int mid, i
 	{
 		L[l] <= R[r] ? arr[i] = L[l++] : arr[i] = R[r++];
 	}
+}
+
+// ------------------------------------------------------------
+// 快排
+template <typename T> void SortQuick(std::vector<T>& arr) { SortQuick(arr, 0, arr.size()); }
+template <typename T> void SortQuick(std::vector<T>& arr, int begin, int end) {
+	if (end - begin > 1) {
+		int pivot = SortQuick2(arr, begin, end); //按主元将arr分成两部分，Left全小于主元，Right全大于
+		SortQuick(arr, begin, pivot);
+		SortQuick(arr, pivot+1, end);
+	}
+}
+template <typename T> int SortQuick2(std::vector<T>& arr, int begin, int end) { 
+	int& pivot = arr[begin]; //定主元，用以分割……TODO:optimize:随机选取主元，交换至排头
+	int i = begin; //i之前是小于等于主元的
+	for (int i = begin + 1; i < end; ++i) {
+		if (arr[i] <= pivot) std::swap(arr[++i], arr[i]);
+		//循环不变式：idx之前<=pivot，idx到i>pivot，i之后待检测
+	}
+	std::swap(pivot, arr[i]); //主元交换到正确的位置
+	return i;
 }
