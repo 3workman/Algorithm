@@ -24,8 +24,6 @@
 #include <tuple>
 
 typedef std::tuple<int, int, int> SubArray; //左下标、右下标、累加和
-#define SubArrayLeft(a) std::get<0>(a)
-#define SubArrayRight(a) std::get<1>(a)
 #define SubArraySum(a) std::get<2>(a)
 
 // ------------------------------------------------------------
@@ -66,28 +64,6 @@ SubArray FindMaxSubArray(const std::vector<int>& arr) { return FindMaxSubArray(a
 
 // ------------------------------------------------------------
 // 增量
-//SubArray FindMaxSubArrayEx(const std::vector<int>& arr, int begin, int end) {
-//	if (end - begin <= 1) {
-//		return { begin, end, arr[begin] };
-//	} else {
-//		auto ret = FindMaxSubArrayEx(arr, begin, end - 1);
-//		int left = SubArrayLeft(ret);
-//		int right = SubArrayRight(ret);
-//		int sum = SubArraySum(ret);
-//		int addIdx = end - 1;
-//
-//		int sum2 = 0;
-//		for (int i = right; i <= addIdx; ++i) sum2 += arr[i];
-//
-//		if (sum > 0 && sum2 > 0)  //右下标挪至新元素处
-//			return { left, end, SubArraySum(ret) + sum2 };
-//		else if (arr[addIdx] >= sum) //抛弃旧结果
-//			return { addIdx, end, arr[addIdx] };
-//		else
-//			return ret;
-//	}
-//}
-//SubArray FindMaxSubArrayEx(const std::vector<int>& arr) { return FindMaxSubArrayEx(arr, 0, arr.size()); }
 SubArray FindMaxSubArrayEx(const std::vector<int>& arr) {
 	int left(0), right(1), sum(arr[0]), sum2(0);//right到新下标，期间元素的累加和
 	for (size_t i = 1; i < arr.size(); ++i) {
@@ -102,6 +78,4 @@ SubArray FindMaxSubArrayEx(const std::vector<int>& arr) {
 }
 
 // ------------------------------------------------------------
-#undef SubArrayLeft
-#undef SubArrayRight
 #undef SubArraySum
