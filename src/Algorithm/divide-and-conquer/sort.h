@@ -28,13 +28,37 @@
 template <typename T> void SortInsert(std::vector<T>& arr) {
 	for (size_t i = 1; i < arr.size(); ++i) {
 		T key = arr[i];	//待比较的新元素
-		int j = i - 1;	//新元素之前的，已经排序好了
-		while (j >= 0 && arr[j] > key) {
+		//新元素之前的，已经排序好了
+		int j = i - 1;
+		for (; j >= 0 && arr[j] > key; --j) {
 			arr[j + 1] = arr[j]; //已排序元素后移一位
-			--j;
 		}
 		arr[j + 1] = key; //将新元素插入空位中（排序元素挪出的）
 	}
+	/*循环不变式：i之前已排序，A[i]待检测
+	·初始化：
+				i
+		------------------------------------------------
+		A[0]  A[1]
+		------------------------------------------------
+		A[0]只有一个，已排序好
+		检测A[1]：
+			·拷贝A[1]的值，为key
+			·若A[0] > key，A[0]后移一位到A[1]，空出原本的[0]位
+			·将key插入[0]位
+	·迭代：（i=n 推广到 i=n+1）
+			     				i
+		------------------------------------------------
+		A[0]  A[1]  A[2] ……  A[i] ……
+		------------------------------------------------
+		将A[i]插入到A[0]...A[i-1]的合适位置
+			·拷贝A[i]的值，为key
+			·因为A[0]...A[i-1]已排序的，目标位置之后的元素均需后移一位
+				·遍历 i-1 downto 0
+				·若A[j] > key，A[j]后移
+				·A[j] <= key，停止遍历，j后面的空位即key要插入之处
+		依然保持了：i之前已排序
+	*/
 }
 
 // ------------------------------------------------------------
@@ -49,8 +73,9 @@ template <typename T> void SortMerge(std::vector<T>& arr, int begin, int end) {
 	}
 }
 template <typename T> void SortMerge2(std::vector<T>& arr, int begin, int mid, int end) {
-	//两子数组……可优化为原址排序，挪动元素
-	std::vector<T> L(arr.begin() + begin, arr.begin() + mid), R(arr.begin() + mid, arr.begin() + end);
+	std::vector<T> 
+		L(arr.begin() + begin, arr.begin() + mid), 
+		R(arr.begin() + mid, arr.begin() + end);
 	L.push_back(INT_MAX); R.push_back(INT_MAX); //放置哨兵，数组判空，合并到元素比较之中
 
 	for (int i(begin), l(0), r(0); i < end; ++i)
@@ -64,7 +89,7 @@ template <typename T> void SortMerge2(std::vector<T>& arr, int begin, int mid, i
 template <typename T> void SortQuick(std::vector<T>& arr) { SortQuick(arr, 0, arr.size()); }
 template <typename T> void SortQuick(std::vector<T>& arr, int begin, int end) {
 	if (end - begin > 1) {
-		int pivot = SortQuick2(arr, begin, end); //按主元将arr分成两部分，Left全小于主元，Right全大于
+		int pivot = Divide(arr, begin, end); //按主元将arr分成两部分，Left全小于主元，Right全大于
 		SortQuick(arr, begin, pivot);
 		SortQuick(arr, pivot+1, end);
 	}
@@ -74,20 +99,43 @@ template <typename T> void SortQuick(std::vector<T>& arr, int begin, int end) {
 	//	begin = pivot + 1;
 	//}
 }
-template <typename T> int SortQuick2(std::vector<T>& arr, int begin, int end) {
+template <typename T> int Divide(std::vector<T>& arr, int begin, int end) {
 	//std::swap(arr[begin], arr[Rand::rand(begin, end)]);
-	int& pivot = arr[begin]; //定主元，用以分割……Optimize:随机选取主元，交换至排头；三数取中；
-	int i = begin; //i之前是小于等于主元的，所以交换的是i+1元素
-	for (int j = begin + 1; j < end; ++j) {
-		if (arr[j] <= pivot) std::swap(arr[++i], arr[j]);
-		//循环不变式：i之前<=pivot，i到j>pivot，j之后待检测
-	}
+	auto& pivot = arr[begin]; //定主元，用以分割……Optimize:随机选取主元，交换至排头；三数取中；
+	int i = begin;			 //i之前 <= 主元，所以交换的是i+1
+	for (int j = begin + 1; j < end; ++j)
+		if (arr[j] <= pivot)
+			std::swap(arr[++i], arr[j]);
 	std::swap(pivot, arr[i]); //主元交换到正确的位置
+	return i;
+	/*循环不变式：i之前 <= 主元，A[j]待检测
+	·初始化：
+		  i		j
+		------------------------------------------------
+		A[0]  A[1]
+		------------------------------------------------
+		若A[1] <= pivot，i=1；（维持“i之前 <= 主元”）
+		否则不变
+	·迭代：（j=n 推广到 j=n+1）
+				i				j
+		------------------------------------------------
+		A[0]  A[1]  A[2] ……  A[j] ……
+		------------------------------------------------
+		若A[j] <= pivot，交换 A[j]<-->A[i+1]，i=i+1；（维持“i之前 <= 主元”）
+		否则不变
+	*/
+}
+template <typename T> int DivideByKey(std::vector<T>& arr, const T& key, int begin, int end) {
+	int i = begin;
+	for (int j = begin + 1; j < end; ++j)
+		if (arr[j] <= key)
+			std::swap(arr[++i], arr[j]);
 	return i;
 }
 
 // ------------------------------------------------------------
 // 堆排序，最大堆 Θ(nlgn)
+// 叶节点是无需调整的
 #define Left(i)		((i<<1)+1)
 #define Right(i)	((i<<1)+2)
 #define Parent(i)	((i-1)>>1)
@@ -97,6 +145,7 @@ template <typename T> void SortHeap(std::vector<T>& arr) {
 	for (int i = Parent(heapSize-1); i >= 0; --i) { //从最后一个元素的父结点开始调整
 		HeapIfy(arr, i, heapSize);
 	}
+	//排除根节点，调整剩余堆，循环
 	for (--heapSize; heapSize > 0; --heapSize) {//减少堆size
 		std::swap(arr[0], arr[heapSize]);		//根节点交换至尾部
 		HeapIfy(arr, 0, heapSize);				//调整新堆
@@ -123,15 +172,14 @@ template <typename T> void SortCount(std::vector<T>& arr, T range1, T range2) {
 	for (auto & it : arr) ++range[ it-range1 ];
 	for (size_t i = 1; i < range.size(); ++i) range[i] += range[i-1]; //range[i]记录有多少个元素<=i
 	for (size_t i = arr.size()-1; i >= 0; --i) { //倒序遍历，保证排序是稳定的
-		auto rangeIdx = arr[i]-range1;
-		ret[ --range[rangeIdx] ] = arr[i]; //计数减一，即元素要放入的位置
+		ret[ --range[ arr[i]-range1] ] = arr[i]; //计数减一，即元素要放入的位置
 	}
 	arr = std::move(ret);
 }
 
 // ------------------------------------------------------------
 // 基数排序 Θ(d(n+k))：n个d位元素3
-// 先对个位稳定排序，再对十位，再对百位……可对多关键字的记录排序，如日期(年月日)
+// 先对个位【稳定排序】，再对十位，再对百位……可对多关键字的记录排序，如日期(年月日)
 #define Radix(n, d) ((n%std::pow(10,d))/std::pow(10,d-1))
 #undef Radix
 
