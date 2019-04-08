@@ -31,6 +31,7 @@ template <typename T> T SelectMinK(std::vector<T>& arr, int k, int begin, int en
 
 // ------------------------------------------------------------
 // 线性，第k小的元素
+#define MedianIdx(begin, size) (begin+size/2)
 template <typename T> T SelectMinEx(std::vector<T> arr, int k) { return SelectMinEx(arr, k, 0, arr.size()); }
 template <typename T> T SelectMinEx(std::vector<T>& arr, int k, int begin, int end) {
 	if (end-begin <= 1) return arr[begin];
@@ -42,15 +43,15 @@ template <typename T> T SelectMinEx(std::vector<T>& arr, int k, int begin, int e
 	std::vector<T> mids(n);
 	for (int i = 1; i <= n; ++i) {
         SortInsert(arr, 5*(i-1), 5*i);
-		mids[i-1] = arr[5*i-3];
+		mids[i-1] = arr[MedianIdx(5*(i-1), 5)];
 	}
 	if (leftCnt > 0) {
         SortInsert(arr, end-leftCnt, end);
-		mids.push_back(arr[end-(leftCnt+1)/2]);
+        mids.push_back(arr[MedianIdx(end-leftCnt, leftCnt)]);
 	}
 
 	//找出中位数的中位数，用它作主元
-	auto mid = SelectMinK(mids, mids.size()/2);
+	auto mid = SelectMinK(mids, MedianIdx(0, mids.size()));
 	int pivot = _Divide(arr, mid, begin, end);
 
 	leftCnt = pivot - begin; //前半部元素数量
@@ -69,3 +70,4 @@ template <typename T> int _Divide(std::vector<T>& arr, const T& key, int begin, 
     std::swap(arr[iKey], arr[i]);
     return i;
 }
+#undef MedianIdx
