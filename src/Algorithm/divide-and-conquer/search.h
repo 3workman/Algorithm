@@ -18,15 +18,15 @@ int SearchInOrder(int n, const std::function<bool(int)>& f) {
 
 // ------------------------------------------------------------
 // 第k小的元素
-template <typename T> T SelectMin(std::vector<T> arr, int k) { return SelectMin(arr, k, 0, arr.size()); }
-template <typename T> T SelectMin(std::vector<T>& arr, int k, int begin, int end) {
+template <typename T> T SelectMinK(std::vector<T> arr, int k) { return SelectMinK(arr, k, 0, arr.size()); }
+template <typename T> T SelectMinK(std::vector<T>& arr, int k, int begin, int end) {
 	if (end - begin <= 1) return arr[begin];
 	int pivot = Divide(arr, begin, end);
 	int leftCnt = pivot - begin; //前半部元素数量
 	if (leftCnt == k) return arr[pivot];			//k正在主元处
 	return leftCnt > k ? 
-		SelectMin(arr, k, begin, pivot) :			//k在前半部
-		SelectMin(arr, k-leftCnt-1, pivot+1, end);	//k在后半部，删去前部数目、删去主元
+		SelectMinK(arr, k, begin, pivot) :			//k在前半部
+		SelectMinK(arr, k-leftCnt-1, pivot+1, end);	//k在后半部，删去前部数目、删去主元
 }
 
 // ------------------------------------------------------------
@@ -41,21 +41,31 @@ template <typename T> T SelectMinEx(std::vector<T>& arr, int k, int begin, int e
 	//对每组排序，找出其中位数
 	std::vector<T> mids(n);
 	for (int i = 1; i <= n; ++i) {
-		SortQuick(arr, 5*(i-1), 5*i);
+        SortInsert(arr, 5*(i-1), 5*i);
 		mids[i-1] = arr[5*i-3];
 	}
 	if (leftCnt > 0) {
-		SortQuick(arr, end-leftCnt, end);
+        SortInsert(arr, end-leftCnt, end);
 		mids.push_back(arr[end-(leftCnt+1)/2]);
 	}
 
 	//找出中位数的中位数，用它作主元
-	auto mid = SelectMin(mids, (mids.size()+1)/2);
-	int pivot = DivideByKey(arr, mid, begin, end);
+	auto mid = SelectMinK(mids, mids.size()/2);
+	int pivot = _Divide(arr, mid, begin, end);
 
 	leftCnt = pivot - begin; //前半部元素数量
 	if (leftCnt == k) return arr[pivot];					//k正在主元处
 	return leftCnt > k ?
 		SelectMinEx(arr, k, begin, pivot) :					//k在前半部
 		SelectMinEx(arr, k - leftCnt - 1, pivot + 1, end);	//k在后半部，删去前部数目、删去主元
+}
+template <typename T> int _Divide(std::vector<T>& arr, const T& key, int begin, int end) {
+    int i = begin - 1, iKey = begin;
+    for (int j = i + 1; j < end; ++j) {
+        if (arr[j] == key) iKey = j;
+        if (arr[j] <= key)
+            std::swap(arr[++i], arr[j]);
+    }
+    std::swap(arr[iKey], arr[i]);
+    return i;
 }

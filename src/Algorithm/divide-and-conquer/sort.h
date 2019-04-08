@@ -25,15 +25,16 @@
 
 // ------------------------------------------------------------
 // 插入 Θ(n^2)
-template <typename T> void SortInsert(std::vector<T>& arr) {
-	for (size_t i = 1; i < arr.size(); ++i) {
+template <typename T> void SortInsert(std::vector<T>& arr) { SortInsert(arr, 0, arr.size()); }
+template <typename T> void SortInsert(std::vector<T>& arr, int begin, int end) {
+	for (int i = begin+1; i < end; ++i) {
 		T key = arr[i];	//待比较的新元素
 		//新元素之前的，已经排序好了
 		int j = i - 1;
-		for (; j >= 0 && arr[j] > key; --j) {
-			arr[j + 1] = arr[j]; //已排序元素后移一位
+		for (; j >= begin && arr[j] > key; --j) {
+			arr[j+1] = arr[j]; //已排序元素后移一位
 		}
-		arr[j + 1] = key; //将新元素插入空位中（排序元素挪出的）
+		arr[j+1] = key; //将新元素插入空位中（排序元素挪出的）
 	}
 	/*循环不变式：i之前已排序，A[i]待检测
 	·初始化：
@@ -103,7 +104,7 @@ template <typename T> int Divide(std::vector<T>& arr, int begin, int end) {
 	//std::swap(arr[begin], arr[Rand::rand(begin, end)]);
 	auto& pivot = arr[begin]; //定主元，用以分割……Optimize:随机选取主元，交换至排头；三数取中；
 	int i = begin;			 //i之前 <= 主元，所以交换的是i+1
-	for (int j = begin + 1; j < end; ++j)
+	for (int j = i+1; j < end; ++j)
 		if (arr[j] <= pivot)
 			std::swap(arr[++i], arr[j]);
 	std::swap(pivot, arr[i]); //主元交换到正确的位置
@@ -124,13 +125,6 @@ template <typename T> int Divide(std::vector<T>& arr, int begin, int end) {
 		若A[j] <= pivot，交换 A[j]<-->A[i+1]，i=i+1；（维持“i之前 <= 主元”）
 		否则不变
 	*/
-}
-template <typename T> int DivideByKey(std::vector<T>& arr, const T& key, int begin, int end) {
-	int i = begin;
-	for (int j = begin + 1; j < end; ++j)
-		if (arr[j] <= key)
-			std::swap(arr[++i], arr[j]);
-	return i;
 }
 
 // ------------------------------------------------------------
