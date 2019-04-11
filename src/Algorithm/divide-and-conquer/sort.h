@@ -133,30 +133,48 @@ template <typename T> int Divide(std::vector<T>& arr, int begin, int end) {
 #define Left(i)		((i<<1)+1)
 #define Right(i)	((i<<1)+2)
 #define Parent(i)	((i-1)>>1)
-template <typename T> void SortHeap(std::vector<T>& arr) {
-	//构建最大堆
+template <typename T> void SortHeapMax(std::vector<T>& arr) {
+	//构建堆
 	int heapSize = arr.size();
 	for (int i = Parent(heapSize-1); i >= 0; --i) { //从最后一个元素的父结点开始调整
-		HeapIfy(arr, i, heapSize);
+		HeapIfyMax(arr, i, heapSize);
 	}
 	//排除根节点，调整剩余堆，循环
 	for (--heapSize; heapSize > 0; --heapSize) {//减少堆size
 		std::swap(arr[0], arr[heapSize]);		//根节点交换至尾部
-		HeapIfy(arr, 0, heapSize);				//调整新堆
+		HeapIfyMax(arr, 0, heapSize);			//调整新堆
 	}
 }
-template <typename T> void HeapIfy(std::vector<T>& arr, int i, const int kHeapSize) {
+template <typename T> void HeapIfyMax(std::vector<T>& arr, int i, const int kHeapSize) {
 	int l = Left(i), r = Right(i), big = i;
 	if (l < kHeapSize && arr[l] > arr[big]) big = l;
 	if (r < kHeapSize && arr[r] > arr[big]) big = r;
 	if (big != i) {
 		std::swap(arr[big], arr[i]);
-		HeapIfy(arr, big, kHeapSize);
+		HeapIfyMax(arr, big, kHeapSize);
 	}
 }
-#undef Left
-#undef Right
-#undef Parent
+template <typename T> void SortHeapMin(std::vector<T>& arr) {
+	//构建堆
+	int heapSize = arr.size();
+	for (int i = Parent(heapSize - 1); i >= 0; --i) { //从最后一个元素的父结点开始调整
+		HeapIfyMin(arr, i, heapSize);
+	}
+	//排除根节点，调整剩余堆，循环
+	for (--heapSize; heapSize > 0; --heapSize) {//减少堆size
+		std::swap(arr[0], arr[heapSize]);		//根节点交换至尾部
+		HeapIfyMin(arr, 0, heapSize);			//调整新堆
+	}
+}
+template <typename T> void HeapIfyMin(std::vector<T>& arr, int i, const int kHeapSize) {
+	int l = Left(i), r = Right(i), big = i;
+	if (l < kHeapSize && arr[l] < arr[big]) big = l;
+	if (r < kHeapSize && arr[r] < arr[big]) big = r;
+	if (big != i) {
+		std::swap(arr[big], arr[i]);
+		HeapIfyMin(arr, big, kHeapSize);
+	}
+}
 
 // ------------------------------------------------------------
 // 计数排序 Θ(n+k)：输入都属于一个小区间中的整数 [range1, range2]

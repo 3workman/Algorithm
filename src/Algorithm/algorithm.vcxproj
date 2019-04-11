@@ -30,10 +30,11 @@
     <ClInclude Include="..\common\tool\UnitTest.h" />
     <ClInclude Include="..\include\public.h" />
     <ClInclude Include="..\include\stdafx.h" />
-    <ClInclude Include="divide-and-conquer\chip_inspect.h" />
     <ClInclude Include="divide-and-conquer\max_sub_array.h" />
     <ClInclude Include="divide-and-conquer\search.h" />
     <ClInclude Include="divide-and-conquer\sort.h" />
+    <ClInclude Include="LeetCode\check_chip.h" />
+    <ClInclude Include="LeetCode\merge_order_list.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{77E96579-F6AA-4429-B630-030B8CBFDBC2}</ProjectGuid>

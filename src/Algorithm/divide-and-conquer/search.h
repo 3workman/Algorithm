@@ -3,7 +3,7 @@
 #include "sort.h"
 
 // ------------------------------------------------------------
-// 二分，闭包中与目标比较
+// 二分，闭包中与目标比较 Θ(lgn)
 int SearchInOrder(int n, const std::function<bool(int)>& f) {
 	//f(-1) == false and f(n) == true.
 	int i = 0, j = n;
@@ -17,7 +17,7 @@ int SearchInOrder(int n, const std::function<bool(int)>& f) {
 }
 
 // ------------------------------------------------------------
-// 第k小的元素
+// 第k小的元素 Θ(n)
 template <typename T> T SelectMinK(std::vector<T> arr, int k) { return SelectMinK(arr, k, 0, arr.size()); }
 template <typename T> T SelectMinK(std::vector<T>& arr, int k, int begin, int end) {
 	if (end - begin <= 1) return arr[begin];
@@ -30,7 +30,7 @@ template <typename T> T SelectMinK(std::vector<T>& arr, int k, int begin, int en
 }
 
 // ------------------------------------------------------------
-// 线性，第k小的元素
+// 线性，第k小的元素 O(n)
 #define MedianIdx(begin, size) (begin+size/2)
 template <typename T> T SelectMinEx(std::vector<T> arr, int k) { return SelectMinEx(arr, k, 0, arr.size()); }
 template <typename T> T SelectMinEx(std::vector<T>& arr, int k, int begin, int end) {

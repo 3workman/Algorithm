@@ -19,6 +19,9 @@
     <Filter Include="DivideConquer">
       <UniqueIdentifier>{0304b4d3-b2ad-4adb-afae-91d57abf2ab9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="LeetCode">
+      <UniqueIdentifier>{3abbce25-8612-4411-a710-bb7abc5b9e7c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -66,9 +69,6 @@
     <ClInclude Include="..\common\Log\RuntimeCost.h">
       <Filter>common\Log</Filter>
     </ClInclude>
-    <ClInclude Include="divide-and-conquer\chip_inspect.h">
-      <Filter>DivideConquer</Filter>
-    </ClInclude>
     <ClInclude Include="divide-and-conquer\max_sub_array.h">
       <Filter>DivideConquer</Filter>
     </ClInclude>
@@ -77,6 +77,12 @@
     </ClInclude>
     <ClInclude Include="divide-and-conquer\sort.h">
       <Filter>DivideConquer</Filter>
+    </ClInclude>
+    <ClInclude Include="LeetCode\check_chip.h">
+      <Filter>LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="LeetCode\merge_order_list.h">
+      <Filter>LeetCode</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
